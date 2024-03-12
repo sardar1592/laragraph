@@ -1,6 +1,8 @@
 scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
 scalar Date @scalar(class: "MLL\\GraphQLScalars\\Date")
 scalar Email @scalar(class: "MLL\\GraphQLScalars\\Email")
+scalar Upload
+  @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Upload")
 
 type Query {
     user(
@@ -139,6 +141,10 @@ type Mutation {
   ): Speaker @delete
 
 
+  uploadSpeakerPhoto(
+    id: ID!
+    photo: Upload!
+  ): Speaker @upload(field: "photo")
 
 
 }

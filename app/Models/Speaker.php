@@ -9,6 +9,14 @@ class Speaker extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'title',
+        'bio',
+        'photo',
+        'event_id'
+    ];
+
     public function event()
     {
         return $this->belongsTo(Event::class);
