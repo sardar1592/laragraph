@@ -89,10 +89,15 @@ type Mutation {
   ): User @delete
 
   createEvent(
-    name: String!
-    city: String!
-    date: Date!
-    venue: String!
+    name: String! @rules(apply: ["required", "unique:events,name", "min:3", "max:255"])
+    city: String! @rules(apply: ["max:20"], messages: [
+      {
+        rule: "max"
+        message: "City name should not be more than 20 characters"
+      }
+    ])
+    date: Date! @rules(apply: ["App\\Rules\\FutureDate"])
+    venue: String! @rules(apply: ["required", "lowercase", "not_in:Marriot"])
     online: Boolean!
   ): Event @create
 
@@ -114,7 +119,7 @@ type Mutation {
     name: String! @rules(apply: ["required", "unique:speakers,name", "min:3", "max:255"])
     email: Email! @rules(apply: ["required", "unique:speakers,email", "email"])
     bio: String! @rules(apply: ["required", "min:3", "max:255"])
-    photo: String 
+    photo: String @rules(apply: ["sometimes"])
     twitter: String @rules(apply: ["min:3", "max:12"])
     city: String! @rules(apply: ["required", "min:3", "max:255", "in:Lahore,Karachi,Islamabad,Faisalabad,Multan,Peshawar,Quetta"])
     country: String! @rules(apply: ["required", "min:3", "max:255", "in:Pakistan"])
